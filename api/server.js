@@ -79,6 +79,7 @@ import aiDetectorMiddleware from './middleware/ai-detector.js';
 import { validateConfig as validateX402Config } from './config/x402-config.js';
 
 const app = express();
+app.use(express.json());
 app.get("/api/test", (req, res) => {
   res.json({ ok: true, message: "Test route working" });
 });
