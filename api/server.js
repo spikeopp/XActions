@@ -79,6 +79,9 @@ import aiDetectorMiddleware from './middleware/ai-detector.js';
 import { validateConfig as validateX402Config } from './config/x402-config.js';
 
 const app = express();
+app.get("/api/test", (req, res) => {
+  res.json({ ok: true, message: "Test route working" });
+});
 app.post("/api/webhook", async (req, res) => {
   try {
     console.log("📩 ViralFlow webhook received:", req.body);
