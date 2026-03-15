@@ -82,36 +82,50 @@ const app = express();
 app.get("/api/test", (req, res) => {
   res.json({ ok: true, message: "Test route working" });
 });
+
+// viralflow webhook function  starts below
+
+
 app.all("/api/webhook", async (req, res) => {
   try {
-    console.log("📩 ViralFlow webhook received:", req.body);
+
+    const post = req.body;
+
+    console.log("📩 ViralFlow webhook:", post);
+
+    const tweet =
+      post?.content ||
+      post?.text ||
+      post?.tweet ||
+      "Empty tweet";
+
+    console.log("📝 Tweet received:", tweet);
+
+    // For now just confirm receipt
+    // Next step will connect real Twitter automation
 
     res.json({
       success: true,
-      message: "Webhook received by XActions",
-      method: req.method
+      tweet: tweet,
+      message: "ViralFlow post received"
     });
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Webhook failed" });
-  }
-});
-app.all("/api/webhook", async (req, res) => {
-  try {
-    console.log("📩 ViralFlow webhook received:", req.body);
 
-    res.json({
-      success: true,
-      message: "Webhook received by XActions",
-      method: req.method
+    res.status(500).json({
+      success: false,
+      error: "Webhook processing failed"
     });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Webhook failed" });
   }
 });
+
+
+
+// above is viralflow webhook function 
+
+
+
 const httpServer = createServer(app);
 
 // Initialize Socket.io for real-time browser-to-browser communication
