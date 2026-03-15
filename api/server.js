@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createServer } from 'http';
+const { chromium } = require("playwright");
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -533,5 +534,28 @@ app.post("/api/webhook", async (req, res) => {
     res.status(500).json({ error: "Webhook processing failed" });
   }
 });
+
+// tweet post bot
+async function postTweet(tweetText) {
+
+  const browser = await chromium.launch({
+    headless: true
+  });
+
+  const context = await browser.newContext();
+
+  const page = await context.newPage();
+
+  await page.goto("https://twitter.com/compose/tweet");
+
+  await page.fill('[data-testid="tweetTextarea_0"]', tweetText);
+
+  await page.click('[data-testid="tweetButton"]');
+
+  await page.waitForTimeout(3000);
+
+  await browser.close();
+
+}
 export default app;
 
