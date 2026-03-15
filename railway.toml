@@ -1,8 +1,7 @@
 [build]
-builder = "nixpacks"
-buildCommand = "npx prisma generate"
+builder = "dockerfile"
 
 [deploy]
-startCommand = "npx prisma db push && node api/server.js"
+startCommand = "node api/server.js"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
