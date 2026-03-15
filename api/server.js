@@ -465,6 +465,25 @@ httpServer.listen(PORT, async () => {
   // Start unfollower auto-scan scheduler
   startScheduler(io);
 });
+app.post("/api/webhook", async (req, res) => {
+  try {
+    const { content } = req.body;
 
+    console.log("Webhook received:", content);
+
+    // For now just log the tweet request
+    // Later we connect Twitter automation here
+
+    res.json({
+      success: true,
+      message: "Webhook received by XActions",
+      tweet: content
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Webhook processing failed" });
+  }
+});
 export default app;
 
