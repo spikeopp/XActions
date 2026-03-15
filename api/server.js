@@ -82,13 +82,29 @@ const app = express();
 app.get("/api/test", (req, res) => {
   res.json({ ok: true, message: "Test route working" });
 });
-app.post("/api/webhook", async (req, res) => {
+app.all("/api/webhook", async (req, res) => {
   try {
     console.log("📩 ViralFlow webhook received:", req.body);
 
     res.json({
       success: true,
-      message: "Webhook received"
+      message: "Webhook received by XActions",
+      method: req.method
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Webhook failed" });
+  }
+});
+app.all("/api/webhook", async (req, res) => {
+  try {
+    console.log("📩 ViralFlow webhook received:", req.body);
+
+    res.json({
+      success: true,
+      message: "Webhook received by XActions",
+      method: req.method
     });
 
   } catch (error) {
