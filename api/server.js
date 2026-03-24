@@ -102,6 +102,7 @@ app.all("/api/webhook", async (req, res) => {
       "Empty tweet";
 
     console.log("📝 Tweet received:", tweet);
+    
     await postTweet(tweet);
     
     // For now just confirm receipt
