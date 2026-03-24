@@ -103,7 +103,7 @@ app.all("/api/webhook", async (req, res) => {
 
     console.log("📝 Tweet received:", tweet);
     
-    await postTweet(tweet);
+    //await postTweet(tweet);
     
     // For now just confirm receipt
     // Next step will connect real Twitter automation
